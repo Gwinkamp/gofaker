@@ -7,7 +7,8 @@ import (
 )
 
 const (
-	testRegionCode uint = 96
+	testRegionCode  uint = 96
+	numberOfRegions uint = 89
 )
 
 // Faker for generating requisites of organizations
@@ -42,16 +43,65 @@ func (faker *Faker) INNLE() INN {
 func (faker *Faker) INN() INN {
 	inn := INN{}
 
-  inn.RegionCode = testRegionCode
-  inn.Inspection = inn.RegionCode*100 + faker.rnd.UintN(90) + 10
-  inn.SerialNumber = faker.rnd.UintN(1000000)
+	inn.RegionCode = testRegionCode
+	inn.Inspection = inn.RegionCode*100 + faker.rnd.UintN(90) + 10
+	inn.SerialNumber = faker.rnd.UintN(1_000_000)
 
-  number := (uint64(inn.Inspection) * 1000000) + uint64(inn.SerialNumber)
+	number := (uint64(inn.Inspection) * 1_000_000) + uint64(inn.SerialNumber)
 
-  c, _ := csum.CalcINN(number)
+	c, _ := csum.CalcINN(number)
 
-  inn.Checksum = uint(c)
-  inn.Value = (number * 100) + c
+	inn.Checksum = uint(c)
+	inn.Value = (number * 100) + c
 
-  return inn
+	return inn
+}
+
+// OGRN generates OGRN of legal entity
+func (faker *Faker) OGRN() OGRN {
+	ogrn := OGRN{}
+
+	if faker.rnd.IntN(2) == 0 {
+		ogrn.Sign = 1
+	} else {
+		ogrn.Sign = 5
+	}
+
+	ogrn.YearEnd = faker.rnd.UintN(100)
+	ogrn.RegionCode = faker.rnd.UintN(numberOfRegions) + 1
+	ogrn.EntryNumber = faker.rnd.UintN(10_000_000)
+
+	number := uint64(ogrn.Sign)*100_000_000_000 +
+		uint64(ogrn.YearEnd)*1_000_000_000 +
+		uint64(ogrn.RegionCode)*10_000_000 +
+		uint64(ogrn.EntryNumber)
+
+	c, _ := csum.CalcOGRN(number)
+
+	ogrn.Checksum = uint(c)
+	ogrn.Value = (number * 10) + c
+
+	return ogrn
+}
+
+// OGRNIP generates OGRN of individual entrepreneur
+func (faker *Faker) OGRNIP() OGRN {
+	ogrn := OGRN{}
+
+	ogrn.Sign = 3
+	ogrn.YearEnd = faker.rnd.UintN(100)
+	ogrn.RegionCode = faker.rnd.UintN(numberOfRegions) + 1
+	ogrn.EntryNumber = faker.rnd.UintN(1_000_000_000)
+
+	number := uint64(ogrn.Sign)*10_000_000_000_000 +
+		uint64(ogrn.YearEnd)*100_000_000_000 +
+		uint64(ogrn.RegionCode)*1_000_000_000 +
+		uint64(ogrn.EntryNumber)
+
+	c, _ := csum.CalcOGRNIP(number)
+
+	ogrn.Checksum = uint(c)
+	ogrn.Value = (number * 10) + c
+
+	return ogrn
 }

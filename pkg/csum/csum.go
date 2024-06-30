@@ -10,6 +10,13 @@ const (
 	minBitDepthInnLE = 9
 	// minBitDepthInn is minimum bit depth of inn private person for calculating checksum
 	minBitDepthInn = 10
+	// minBitDepthOGRN is minimum bit depth of ogrn legal entity for calculating checksum
+	minBitDepthOGRN = 12
+	// minBitDepthOGRNIP is minimum bit depth of ogrn individual entrepreneur for calculating checksum
+	minBitDepthOGRNIP = 14
+
+	delimiterOGRN = minBitDepthOGRN - 1
+	delimiterOGRNIP = minBitDepthOGRNIP - 1
 )
 
 type Number interface {
@@ -51,6 +58,28 @@ func CalcINN[V Number](inn V) (uint64, error) {
 	csum2 %= 10
 
 	return csum1*10 + csum2, nil
+}
+
+// CalcOGRN calculates checksum of OGRN legal entity
+func CalcOGRN[V Number](ogrn V) (uint64, error) {
+	const operation = "csum.CalcOGRN"
+
+	val, err := prepareForCalc(ogrn, minBitDepthOGRN)
+	if err != nil {
+		return 0, fmt.Errorf("%s: %v", operation, err)
+	}
+	return (val % delimiterOGRN) % 10, nil
+}
+
+// CalcOGRNIP calculates checksum of OGRN individual entrepreneur
+func CalcOGRNIP[V Number](ogrnip V) (uint64, error) {
+	const operation = "csum.CalcOGRNIP"
+
+  val, err := prepareForCalc(ogrnip, minBitDepthOGRNIP)
+  if err!= nil {
+    return 0, fmt.Errorf("%s: %v", operation, err)
+  }
+  return (val % delimiterOGRNIP) % 10, nil
 }
 
 // prepareForCalc prepares number for calculating checksum
