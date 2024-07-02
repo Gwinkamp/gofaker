@@ -9,6 +9,7 @@ const (
 	formatINNLE      string = "%010d"
 	formatOGRN       string = "%013d"
 	foramtOGRNIP     string = "%015d"
+	formatSNILS      string = "%011d"
 	defaultFormatVal string = "undefined"
 )
 
@@ -100,4 +101,26 @@ func (ogrn *OGRN) String() string {
 		return defaultFormatVal
 	}
 	return fmt.Sprintf(format, ogrn.Value)
+}
+
+// SNILS represents insurance number of individual personal account
+type SNILS struct {
+	SerialNumber uint
+	Checksum     uint
+	Value        uint64
+}
+
+// String returns SNILS value as string
+func (snils *SNILS) String() string {
+	return fmt.Sprintf(formatSNILS, snils.Value)
+}
+
+// Stringf returns SNILS value as formatted string (XXX-XXX-XXX XX)
+func (snils *SNILS) Stringf() string {
+	var (
+		r1 uint = snils.SerialNumber / 1_000_000
+		r2 uint = snils.SerialNumber / 1_000 % 1_000
+		r3 uint = snils.SerialNumber % 1_000
+	)
+	return fmt.Sprintf("%03d-%03d-%03d %02d", r1, r2, r3, snils.Checksum)
 }

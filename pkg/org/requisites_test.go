@@ -134,3 +134,44 @@ func TestStringOGRN(t *testing.T) {
 		})
 	}
 }
+
+func TestStringSNILS(t *testing.T) {
+	testcases := []struct {
+		snils     org.SNILS
+		snilsStr  string
+		snilsStrf string
+	}{
+		{
+			snils: org.SNILS{
+				SerialNumber: 135273663,
+				Checksum:     59,
+				Value:        13527366359,
+			},
+			snilsStr:  "13527366359",
+			snilsStrf: "135-273-663 59",
+		},
+		{
+			snils: org.SNILS{
+				SerialNumber: 57033028,
+				Checksum:     27,
+				Value:        5703302827,
+			},
+			snilsStr:  "05703302827",
+			snilsStrf: "057-033-028 27",
+		},
+	}
+
+	for _, tc := range testcases {
+		testname := fmt.Sprintf("snils:%s", tc.snilsStrf)
+		t.Run(testname, func(t *testing.T) {
+			snilsStr := tc.snils.String()
+			snilsStrf := tc.snils.Stringf()
+			if snilsStr != tc.snilsStr {
+				t.Fatalf("OGRN.String returned %s, expected %s", snilsStr, tc.snilsStr)
+			}
+			if snilsStrf != tc.snilsStrf {
+				t.Fatalf("OGRN.Stringf returned %s, expected %s", snilsStrf, tc.snilsStrf)
+			}
+		})
+	}
+}

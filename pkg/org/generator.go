@@ -105,3 +105,17 @@ func (faker *Faker) OGRNIP() OGRN {
 
 	return ogrn
 }
+
+// SNILS generates SNILS
+func (faker *Faker) SNILS() SNILS {
+	snils := SNILS{}
+
+	snils.SerialNumber = faker.rnd.UintN(1_000_000_000)
+
+	csum := csum.CalcSNILS(snils.SerialNumber)
+
+	snils.Checksum = uint(csum)
+	snils.Value = uint64(snils.SerialNumber*100) + csum
+
+	return snils
+}

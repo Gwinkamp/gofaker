@@ -185,3 +185,36 @@ func TestOGRNIP(t *testing.T) {
 		})
 	}
 }
+
+func TestSNILS(t *testing.T) {
+	cc8 := rand.NewChaCha8(seed)
+	faker := org.NewFaker(cc8)
+
+	testcases := []org.SNILS{
+		{
+			SerialNumber: 165043130,
+			Checksum:     32,
+			Value:        16504313032,
+		},
+		{
+			SerialNumber: 744816004,
+			Checksum:     2,
+			Value:        74481600402,
+		},
+		{
+			SerialNumber: 721135191,
+			Checksum:     48,
+			Value:        72113519148,
+		},
+	}
+
+	for _, tc := range testcases {
+		testname := fmt.Sprintf("snils:%d", tc.Value)
+		t.Run(testname, func(t *testing.T) {
+			result := faker.SNILS()
+			if result != tc {
+				t.Fatalf("SNILS returned %d, expected %d", result, tc)
+			}
+		})
+	}
+}
