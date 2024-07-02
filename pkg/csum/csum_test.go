@@ -16,6 +16,7 @@ func TestCalcINNLE__Positive(t *testing.T) {
 		{inn: 968572434, csum: 3},
 		{inn: 963727193, csum: 6},
 		{inn: 9602866361, csum: 1},
+		{inn: 26408212, csum: 6},
 	}
 
 	for _, tc := range testcases {
@@ -55,6 +56,7 @@ func TestCalcINN__Positive(t *testing.T) {
 		{inn: 9650163434, csum: 14},
 		{inn: 9667961824, csum: 39},
 		{inn: 962089855560, csum: 60},
+		{inn: 207013687, csum: 33},
 	}
 
 	for _, tc := range testcases {
@@ -161,5 +163,28 @@ func TestCalcOGRN__ValidateOGRNIP(t *testing.T) {
 	}
 	if result != 0 {
 		t.Errorf("CalcOGRNIP returned %d, expected 0", result)
+	}
+}
+
+func TestCalcSNILS__Positive(t *testing.T) {
+	testcases := []struct {
+		snils uint64
+		csum  uint64
+	}{
+		{snils: 168117607, csum: 76},
+		{snils: 160564491, csum: 63},
+		{snils: 112233445, csum: 95},
+		{snils: 21234567, csum: 0},
+		{snils: 18732292795, csum: 95},
+	}
+
+	for _, tc := range testcases {
+		testname := fmt.Sprintf("snils:%d", tc.snils)
+		t.Run(testname, func(t *testing.T) {
+			result := csum.CalcSNILS(tc.snils)
+			if result != tc.csum {
+				t.Fatalf("CalcSNILS returned %d, expected %d", result, tc.csum)
+			}
+		})
 	}
 }
