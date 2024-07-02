@@ -23,7 +23,7 @@ func NewFaker(src rand.Source) *Faker {
 
 // INNLE generates INN of legal entity
 func (faker *Faker) INNLE() INN {
-	inn := INN{}
+	inn := INN{Type: LegalEntity}
 
 	inn.RegionCode = testRegionCode
 	inn.Inspection = inn.RegionCode*100 + faker.rnd.UintN(90) + 10
@@ -41,7 +41,7 @@ func (faker *Faker) INNLE() INN {
 
 // INN generates INN of private person
 func (faker *Faker) INN() INN {
-	inn := INN{}
+	inn := INN{Type: IndividualEntrepreneur}
 
 	inn.RegionCode = testRegionCode
 	inn.Inspection = inn.RegionCode*100 + faker.rnd.UintN(90) + 10
@@ -59,7 +59,7 @@ func (faker *Faker) INN() INN {
 
 // OGRN generates OGRN of legal entity
 func (faker *Faker) OGRN() OGRN {
-	ogrn := OGRN{}
+	ogrn := OGRN{Type: LegalEntity}
 
 	if faker.rnd.IntN(2) == 0 {
 		ogrn.Sign = 1
@@ -86,7 +86,7 @@ func (faker *Faker) OGRN() OGRN {
 
 // OGRNIP generates OGRN of individual entrepreneur
 func (faker *Faker) OGRNIP() OGRN {
-	ogrn := OGRN{}
+	ogrn := OGRN{Type: IndividualEntrepreneur}
 
 	ogrn.Sign = 3
 	ogrn.YearEnd = faker.rnd.UintN(100)

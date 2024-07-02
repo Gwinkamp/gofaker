@@ -22,6 +22,7 @@ func TestINNLE(t *testing.T) {
 			Inspection:   9624,
 			SerialNumber: 74481,
 			Checksum:     8,
+			Type:         org.LegalEntity,
 			Value:        9624744818,
 		},
 		{
@@ -29,6 +30,7 @@ func TestINNLE(t *testing.T) {
 			Inspection:   9674,
 			SerialNumber: 87818,
 			Checksum:     0,
+			Type:         org.LegalEntity,
 			Value:        9674878180,
 		},
 		{
@@ -36,6 +38,7 @@ func TestINNLE(t *testing.T) {
 			Inspection:   9656,
 			SerialNumber: 49778,
 			Checksum:     4,
+			Type:         org.LegalEntity,
 			Value:        9656497784,
 		},
 	}
@@ -61,6 +64,7 @@ func TestINN(t *testing.T) {
 			Inspection:   9624,
 			SerialNumber: 744816,
 			Checksum:     06,
+			Type:         org.IndividualEntrepreneur,
 			Value:        962474481606,
 		},
 		{
@@ -68,6 +72,7 @@ func TestINN(t *testing.T) {
 			Inspection:   9674,
 			SerialNumber: 878184,
 			Checksum:     61,
+			Type:         org.IndividualEntrepreneur,
 			Value:        967487818461,
 		},
 		{
@@ -75,6 +80,7 @@ func TestINN(t *testing.T) {
 			Inspection:   9656,
 			SerialNumber: 497780,
 			Checksum:     03,
+			Type:         org.IndividualEntrepreneur,
 			Value:        965649778003,
 		},
 	}
@@ -101,6 +107,7 @@ func TestOGRN(t *testing.T) {
 			RegionCode:  65,
 			EntryNumber: 8781849,
 			Checksum:    2,
+			Type:        org.LegalEntity,
 			Value:       1746587818492,
 		},
 		{
@@ -109,6 +116,7 @@ func TestOGRN(t *testing.T) {
 			RegionCode:  39,
 			EntryNumber: 1357938,
 			Checksum:    5,
+			Type:        org.LegalEntity,
 			Value:       5493913579385,
 		},
 		{
@@ -117,6 +125,7 @@ func TestOGRN(t *testing.T) {
 			RegionCode:  29,
 			EntryNumber: 5575851,
 			Checksum:    9,
+			Type:        org.LegalEntity,
 			Value:       1222955758519,
 		},
 	}
@@ -143,6 +152,7 @@ func TestOGRNIP(t *testing.T) {
 			RegionCode:  67,
 			EntryNumber: 721135191,
 			Checksum:    1,
+			Type:        org.IndividualEntrepreneur,
 			Value:       316677211351911,
 		},
 		{
@@ -151,6 +161,7 @@ func TestOGRNIP(t *testing.T) {
 			RegionCode:  46,
 			EntryNumber: 497780578,
 			Checksum:    3,
+			Type:        org.IndividualEntrepreneur,
 			Value:       387464977805783,
 		},
 		{
@@ -159,6 +170,7 @@ func TestOGRNIP(t *testing.T) {
 			RegionCode:  13,
 			EntryNumber: 729878391,
 			Checksum:    2,
+			Type:        org.IndividualEntrepreneur,
 			Value:       343137298783912,
 		},
 	}

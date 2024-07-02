@@ -1,6 +1,16 @@
 package org
 
-import "strconv"
+import (
+	"fmt"
+)
+
+const (
+	formatINN        string = "%012d"
+	formatINNLE      string = "%010d"
+	formatOGRN       string = "%013d"
+	foramtOGRNIP     string = "%015d"
+	defaultFormatVal string = "undefined"
+)
 
 // INN represents individual taxpayer number
 type INN struct {
@@ -26,13 +36,25 @@ type INN struct {
 	// calculated according to a special algorithm established by the Federal Tax Service
 	Checksum uint
 
+	// Type indicates type of organization
+	Type OrgType
+
 	// Value of INN
 	Value uint64
 }
 
 // String returns INN value as string
 func (inn *INN) String() string {
-	return strconv.FormatUint(inn.Value, 10)
+	var format string
+	switch inn.Type {
+	case LegalEntity:
+		format = formatINNLE
+	case IndividualEntrepreneur:
+		format = formatINN
+	default:
+		return defaultFormatVal
+	}
+	return fmt.Sprintf(format, inn.Value)
 }
 
 // OGRN represents main state registration number
@@ -59,11 +81,23 @@ type OGRN struct {
 	// Checksum number (1 digit)
 	Checksum uint
 
+	// Type indicates type of organization
+	Type OrgType
+
 	// Value of OGRN
 	Value uint64
 }
 
 // String returns OGRN value as string
 func (ogrn *OGRN) String() string {
-	return strconv.FormatUint(ogrn.Value, 10)
+	var format string
+	switch ogrn.Type {
+	case LegalEntity:
+		format = formatOGRN
+	case IndividualEntrepreneur:
+		format = foramtOGRNIP
+	default:
+		return defaultFormatVal
+	}
+	return fmt.Sprintf(format, ogrn.Value)
 }
